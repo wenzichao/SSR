@@ -108,6 +108,7 @@
                 display: flex;
                 height: 41px;
                 line-height: 41px;
+                z-index: 50;
                 span{
                     font-size: 20px;
                     font-style: italic;
