@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="contianer">
         <el-row  type="flex" justify="space-between">
 
             <!-- 顶部过滤列表 -->

@@ -1,7 +1,7 @@
 <template>
-  <section>
-    <div>酒店详情</div>
-  </section>
+  <div>
+    酒店页
+  </div>
 </template>
 
 <script>
