@@ -43,10 +43,11 @@
 </template>
 
 <script>
-import PostNav from "@/components/post/postNav.vue";
 export default {
-  components:{
-    PostNav
+  data(){
+    return {
+      dataList:[]
+    }
   },
   data() {
       return {
@@ -178,5 +179,3 @@ export default {
     }
   }
 </style>
-
-

@@ -72,6 +72,8 @@ export default {
 
 <style scoped lang='less'>
 .header{
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 3px 0 #f5f5f5;
     .main{
         width: 1000px;
         margin: 0 auto;

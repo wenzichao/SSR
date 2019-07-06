@@ -25,7 +25,10 @@ export default {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    'assets/main.css'
+    'assets/main.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css',
   ],
   /*
   ** Plugins to load before mounting the App
@@ -33,6 +36,7 @@ export default {
   plugins: [
     '@/plugins/element-ui',
     { src: '@/plugins/localStorage', ssr: false },
+    {src:'@/plugins/vue-quill-editor', ssr:false },
     '@/plugins/axios'
   ],
   /*
