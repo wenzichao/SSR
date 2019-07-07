@@ -5,8 +5,7 @@
                 <li v-for="(item, index) in cities" 
                 :key="index"
                 @mouseenter="mouseOver(index)" 
-                @mouseleave="mouseOut"
-                class="selected">
+                @mouseleave="mouseOut">
                     {{item.type}}
                 </li>
             </ul>
@@ -33,7 +32,6 @@
            num:0,
            show:false,
            cities:[],
-           selected:"grayBorderRight"
        }
    },
    mounted(){
@@ -49,11 +47,9 @@
        mouseOver(index){
            this.show = true;
            this.num = +index;
-           this.selected = "whiteBorderRight"
        },
        mouseOut(){
            this.show=false;
-           this.selected = "grayBorderRight"
        },
        mouseIn(){
            this.show = true;
@@ -66,7 +62,8 @@
     .baseBox{
         // position: relative;
         .nav{
-            border: 1px #ccc solid;
+            border-top: 1px #ccc solid;
+            border-left: 1px #ccc solid;
             width:260px ;
             display: flex;
             box-sizing: border-box;
@@ -78,7 +75,11 @@
                     padding-left: 20px;
                     font-size: 14px;
                     border-bottom: 1px #ccc solid;
+                    border-right: 1px #ccc solid;
                     position: relative;
+                    &:hover{
+                        border-right: none;
+                    }
                 }
 
                 li:after{
@@ -101,14 +102,18 @@
             left: 260px;
             top: 20px;
             width: 400px;
-            
+            z-index: 1000;
             background-color: #fff;
             border: 1px #ccc solid;
+            border-left: none;
             li{
                 display: flex;
                 height: 41px;
                 line-height: 41px;
                 z-index: 50;
+                &:nth-child(5){
+                    border-left: 1px #ccc solid;
+                }
                 span{
                     font-size: 20px;
                     font-style: italic;
@@ -119,7 +124,7 @@
                     font-size: 14px;
                     color:orange;
                     padding: 0 15px;
-                    :hover{
+                    &:hover{
                         text-decoration: underline;
                     }
                 }
@@ -127,22 +132,12 @@
                     font-size: 14px;
                     padding: 0 15px;
                     color:#666;
-                    :hover{
+                    &:hover{
                         text-decoration: underline;
                     }
                 }
             }
 
         }
-    }
-
-    .whiteBorderRight{
-        border-right:1px #fff solid;
-        z-index: 100;
-    }
-
-    .grayBorderRight{
-        border-right:1px #ccc solid;
-        z-index: 100;
     }
 </style>

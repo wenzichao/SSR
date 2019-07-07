@@ -38,25 +38,32 @@
           写游记
         </el-button>
       </div>
+      <!-- 推荐文章 -->
+      <div class="articleList">
+        <recommendArticle />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import PostNav from "@/components/post/postNav.vue";
+import recommendArticle from "@/components/post/recommendArticle.vue";
+
 export default {
-  data(){
-    return {
-      dataList:[]
-    }
-  },
   data() {
       return {
       };
     },
+  components: {
+    PostNav,
+    recommendArticle
+  },
     methods:{
       handleSearch(){},
       handleWriteWalkthrough(){
-        this.$route.push('/post/create')
+        console.log(this.$route);
+        this.$router.push({path:'post/create'})
       }
     },
   mounted(){
@@ -111,7 +118,7 @@ export default {
 
   .rightAside{
     width: 700px;
-    background-color:cyan;
+    // background-color:cyan;
     .search-input{
             width:100%;
             height:40px;

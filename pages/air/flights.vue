@@ -72,6 +72,7 @@ export default {
             url:'/airs',
             params:this.$route.query
             }).then(res=>{
+            console.log(res);
             this.flightsData = res.data;
 
             this.newFlightsData = {...res.data}
