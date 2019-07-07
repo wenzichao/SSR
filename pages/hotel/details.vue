@@ -24,7 +24,7 @@
     </div>
 
     <!-- 酒店信息图片 -->
-    <!-- <div class="details-image">
+    <div class="details-image">
       <div class="details-image-big">
         <!-- <img :src="`http://http://157.122.54.189:9093/images/hotel-pics/${data}`" alt /> -->
         <img :src="`${image_url}`" />
@@ -37,7 +37,7 @@
           />
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- 房间信息 -->
     <div class="details-types">
@@ -161,62 +161,62 @@
             </div>
           </div>
         </div>
-        <div class="details-comment-replycomment">
-          <div class="details-comment-replyuser">
+        <div class="details-comment-ordercomment">
+          <div class="details-comment-orderuser">
             <div>
-              <div class="details-comment-replyavatar">
+              <div class="details-comment-orderavatar">
                 <img
                   src="https://n4-q.mafengwo.net/s11/M00/64/81/wKgBEFsmE0WAPbqnAAAOwSUlOKY63.jpeg?imageMogr2%2Fthumbnail%2F%2196x96r%2Fgravity%2FCenter%2Fcrop%2F%2196x96%2Fquality%2F90"
                   alt
                 />
               </div>
-              <div class="details-comment-replylevel">LV.8</div>
+              <div class="details-comment-orderlevel">LV.8</div>
             </div>
-            <div class="details-comment-replydate">2019-6-26</div>
+            <div class="details-comment-orderdate">2019-6-26</div>
           </div>
-          <div class="details-comment-replytextinput">
-            <div class="details-comment-replytext">badwoman</div>
-            <div class="details-comment-replyinput">
+          <div class="details-comment-ordertextinput">
+            <div class="details-comment-ordertext">badwoman</div>
+            <div class="details-comment-orderinput">
               <input placeholder="添加回复" type="text" />
             </div>
           </div>
         </div>
-        <div class="details-comment-replycomment">
-          <div class="details-comment-replyuser">
+        <div class="details-comment-ordercomment">
+          <div class="details-comment-orderuser">
             <div>
-              <div class="details-comment-replyavatar">
+              <div class="details-comment-orderavatar">
                 <img
                   src="https://n4-q.mafengwo.net/s11/M00/64/81/wKgBEFsmE0WAPbqnAAAOwSUlOKY63.jpeg?imageMogr2%2Fthumbnail%2F%2196x96r%2Fgravity%2FCenter%2Fcrop%2F%2196x96%2Fquality%2F90"
                   alt
                 />
               </div>
-              <div class="details-comment-replylevel">LV.8</div>
+              <div class="details-comment-orderlevel">LV.8</div>
             </div>
-            <div class="details-comment-replydate">2019-6-26</div>
+            <div class="details-comment-orderdate">2019-6-26</div>
           </div>
-          <div class="details-comment-replytextinput">
-            <div class="details-comment-replytext">badwoman</div>
-            <div class="details-comment-replyinput">
+          <div class="details-comment-ordertextinput">
+            <div class="details-comment-ordertext">badwoman</div>
+            <div class="details-comment-orderinput">
               <input placeholder="添加回复" type="text" />
             </div>
           </div>
         </div>
-        <div class="details-comment-replycomment">
-          <div class="details-comment-replyuser">
+        <div class="details-comment-ordercomment">
+          <div class="details-comment-orderuser">
             <div>
-              <div class="details-comment-replyavatar">
+              <div class="details-comment-orderavatar">
                 <img
                   src="https://n4-q.mafengwo.net/s11/M00/64/81/wKgBEFsmE0WAPbqnAAAOwSUlOKY63.jpeg?imageMogr2%2Fthumbnail%2F%2196x96r%2Fgravity%2FCenter%2Fcrop%2F%2196x96%2Fquality%2F90"
                   alt
                 />
               </div>
-              <div class="details-comment-replylevel">LV.8</div>
+              <div class="details-comment-orderlevel">LV.8</div>
             </div>
-            <div class="details-comment-replydate">2019-5-5</div>
+            <div class="details-comment-orderdate">2019-5-5</div>
           </div>
-          <div class="details-comment-replytextinput">
-            <div class="details-comment-replytext">城市客栈环境非常不错，家庭房格局好，孩子们非常喜欢，前台的美女服务态度好，中午到的，一进屋立马清凉舒爽，离欢乐谷非常近，出门过天桥就是欢乐谷正门，周边配套齐全，吃饭，购物方便，乐购，好利来，肯德基，必胜客，火锅，应有尽有，价位也不错，全五星好评！</div>
-            <div class="details-comment-replyinput">
+          <div class="details-comment-ordertextinput">
+            <div class="details-comment-ordertext">城市客栈环境非常不错，家庭房格局好，孩子们非常喜欢，前台的美女服务态度好，中午到的，一进屋立马清凉舒爽，离欢乐谷非常近，出门过天桥就是欢乐谷正门，周边配套齐全，吃饭，购物方便，乐购，好利来，肯德基，必胜客，火锅，应有尽有，价位也不错，全五星好评！</div>
+            <div class="details-comment-orderinput">
               <input placeholder="添加回复" type="text" />
             </div>
           </div>
@@ -323,6 +323,7 @@ export default {
     .details-title {
       .details-title-chinese {
         font-size: x-large;
+        display: inline-block;
       }
       i {
         color: #f90;
@@ -591,23 +592,22 @@ export default {
                   border: 1px solid #dcdfe6;
                   border-radius: 4px;
                   padding-left: 15px;
-                  color: #666;
                 }
               }
             }
           }
         }
       }
-      .details-comment-replycomment {
+      .details-comment-ordercomment {
         display: flex;
         margin-top: 15px;
         padding-bottom: 25px;
         border-bottom: 1px dashed #eee;
-        .details-comment-replyuser {
+        .details-comment-orderuser {
           flex: 1;
           > div {
             display: flex;
-            .details-comment-replyavatar {
+            .details-comment-orderavatar {
               margin-right: 10px;
               margin-bottom: 5px;
               width: 44px;
@@ -619,25 +619,25 @@ export default {
                 width: 100%;
               }
             }
-            .details-comment-replylevel {
+            .details-comment-orderlevel {
               padding-top: 7px;
               font-size: 12px;
               color: #f30;
             }
           }
-          .details-comment-replydate {
+          .details-comment-orderdate {
             font-size: 14px;
             color: #666;
           }
         }
-        .details-comment-replytextinput {
+        .details-comment-ordertextinput {
           flex: 8;
           padding-top: 3px;
-          .details-comment-replytext {
+          .details-comment-ordertext {
             font-size: 16px;
             color: #666;
           }
-          .details-comment-replyinput {
+          .details-comment-orderinput {
             padding-bottom: 10px;
             margin: 10px 0;
             input {
