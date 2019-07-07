@@ -3,7 +3,14 @@
         <div class="top">酒店　<i class="el-icon-arrow-right"></i>　南京市酒店预订</div>
         <el-row type="flex" justify="centent" class="price-select">
             <!-- 输入框 -->
-            <el-input v-model="city" placeholder="请输入内容" class='city-content'></el-input>
+            <!-- <el-input v-model="city" placeholder="请输入内容" class='city-content'></el-input> -->
+            <el-autocomplete
+                class="inline-input city-content"
+                v-model="city"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入内容"
+                @select="handleSelect"
+            ></el-autocomplete>
             <!-- 时间选择框 -->
             <el-date-picker
                 v-model="date"
@@ -67,13 +74,36 @@ export default {
     data(){
         return {
             city:'南京',
+            allCity:[],
             date:'',
             allPeople:'',
             adult:'',
             children:'',
         }
     },
+    mounted(){
+        this.$axios({
+            url:'/cities?name=',
+            method:'GET',
+        }).then(res=>{
+            const {data} = res.data;
+            this.allCity = data;
+        })
+    },
     methods:{
+        handleSelect(val){
+            // console.log(val);
+            this.$emit('changeCity',val)
+        },
+        querySearch(queryString, cb){
+            const newData = this.allCity.map(v=>{
+                return {
+                    ...v,
+                    value:v.name
+                }
+            })
+            cb(newData)
+        },
         handlePeopleNum(){
             this.allPeople = `${this.adult}成人${this.children}儿童`
         },

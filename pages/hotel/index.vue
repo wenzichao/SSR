@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <!-- 引入头部组件 -->
-      <HotelHeader />
+      <HotelHeader @changeCity='changeCity'/>
 
       <!-- 区域组件 -->
       <HotelRegion />
@@ -39,7 +39,8 @@ export default {
       pageIndex:1,
       pageSize:10,
       dataList:[],
-      total:0
+      total:0,
+      city_id:'74'
     }
   },
   mounted(){
@@ -58,7 +59,7 @@ export default {
     },
     getDataList(){
       this.$axios({
-        url:'/hotels?city=74',
+        url:`/hotels?city=${this.city_id}`,
         method:"GET",
         params:{
           _start:this.pageIndex,
@@ -68,7 +69,6 @@ export default {
       }).then(res=>{
         this.dataList = res.data.data
         this.total = res.data.total
-        console.log(res.data);
       })
     },
     getFilter(obj){
@@ -76,6 +76,10 @@ export default {
         path:'/hotel',
         query:{...obj}
       })
+    },
+    changeCity(obj){
+      this.city_id = obj.id;
+      this.getDataList()
     }
   },
 
