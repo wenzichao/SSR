@@ -7,26 +7,31 @@
         <CreateForm/>
         
       </div>
-      <div class="draft">草稿</div>
+      <div class="draft">
+        <CreateAside/>
+
+      </div>
     </el-row>
   </div>
 </template>
 
 <script>
 import CreateForm from "@/components/post/createForm.vue"
+import CreateAside from "@/components/post/createAside.vue"
 
 export default {
-    data() {
-      return {
-
-      }
-    },
     components:{
-      CreateForm
+      CreateForm,
+      CreateAside
     },
-    methods: {
-      
-    }
+    mounted(){
+      this.$axios({
+        url:'/posts',
+        params:this.$route.query
+      }).then(res=>{
+        console.log(res);
+      })
+    },
 };
 </script>
 
@@ -34,5 +39,11 @@ export default {
     .contianer{
         width:1000px;
         margin:20px auto;
+    }
+    .main{
+      width: 60%;
+      h2,p{
+        padding-bottom: 5px;
+      }
     }
 </style>

@@ -1,78 +1,170 @@
 <template>
   <el-form ref="form" :model="form">
-    <el-form-item>
-      <el-input class="title" v-model="form.name" placeholder="请输入标题"></el-input>
-    </el-form-item>
-    <!-- <el-form-item label="内容描述" class="editor">
-        <quillEditor v-model="form.content"></quillEditor>
-    </el-form-item> -->
-    <div class="quill-editor"
-        :content="content"
-        v-quill:myQuillEditor="editorOption">
-    </div>
-    <el-form-item>
-      <el-input v-model="form.region" placeholder="请搜索游玩城市"/>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">发布</el-button>
-      <el-button>取消</el-button>
+      <el-form-item>
+        <el-input v-model="form.title" placeholder="请输入标题"></el-input>
+      </el-form-item>
+    <!-- 富文本框 -->
+      <el-form-item class="quill-editor" 
+          v-model="form.content"
+          v-quill:myQuillEditor="editorOption">
+      </el-form-item>
+      <el-form-item label="选择城市">
+        <!-- fetch-suggestions 返回输入建议的方法 -->
+        <!-- select 点击选中建议项时触发 -->
+        <el-autocomplete
+        :fetch-suggestions="queryCitySearch"
+        placeholder="请搜索游玩城市"
+        @select="handleCitySelect"
+        class="el-autocomplete"
+        v-model="form.city"
+        :trigger-on-focus="false"
+        ></el-autocomplete>
+      </el-form-item>
+      <el-form-item>
+          <el-button type="primary" @click="onSubmit">发布</el-button>
+          或者
+          <el-link type="success" :underline="false" @click="handleAddDraft">保存到草稿</el-link>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-// 导入富文本编辑器的样式
-// import 'quill/dist/quill.core.css'
-// import 'quill/dist/quill.snow.css'
-// import 'quill/dist/quill.bubble.css'
-
-// 导入富文本编辑器的组件
-// import { quillEditor } from 'vue-quill-editor'
+import Vue from 'vue'
+if (process.browser) {
+  const VueQuillEditor = require('vue-quill-editor/dist/ssr')
+  Vue.use(VueQuillEditor, /* { default global options } */)
+}
 
 export default {
+  name:'app',
   data() {
     return {
       form: {
-        name: "",
-        region: "",
-        content:"",
-        editorOption:{
-          modules:{
-            toolbar:[
-              ["bold", "italic", "underline", "strike"],
-
-            ]
-
-          }
-        }
+        title: "",
+        city: "",
+        content:''
+     
       },
+      editorOption: {}
     };
-  },
-  components: {
-      // quillEditor
   },
   methods: {
     onSubmit() {
-        console.log("submit!");
+      const data = {
+        form:this.form
+      }
+      const token = this.$store.state.user.userInfo.token;
+        // 提交到游记列表的接口
+      this.$axios({
+          url: "/posts",
+          method: "POST",
+          data,
+          headers: {
+              Authorization:`Bearer ${token}`
+          }
+      }).then(res => {
+        console.log(res);
+
+          if(status === 0){
+              // 成功的提示
+              this.$message.success(message);
+              // 返回上一页
+              this.$router.back();
+          }else{
+          //     跳转到登录页
+               this.$router.push("/login");
+          }
+      })
+    // 自定义表单验证
+      const rules = {
+          title: {
+              value: this.form.title,
+              message: "请输入文章标题"
+          },
+          content: {
+              value: this.form.content,
+              message: "请输入文章内容"
+          },
+          city: {
+              value: this.form.city,
+              message: "请选择城市"
+          }
+      };
+      // 验证变量哦，默认验证通过
+      let valid = true;
+
+      // 循环验证对象
+      Object.keys(rules).forEach(v => {
+          if(!valid) return;
+
+          // 如果有一项数据不存在
+          if(!rules[v].value){
+              this.$message.warning(rules[v].message);
+              // 验证不通过
+              valid = false;
+          }
+      })
+
+      // 验证不通过，直接返回
+      if(!valid) return;
+
+      this.$router.push({
+          path: "/post/create",
+          query: this.form
+      });
+      if(valid){
+        this.$router.back()
+      }
     },
+    queryCitySearch(value, cb){
+        if(!value) return;
+
+        // 请求游玩城市的接口
+        this.$axios({
+            url: "/airs/city?name="+value,
+            method: "GET",
+        }).then(res => {
+            const {data} = res.data;
+
+            // 给data每一项都加value
+            const newData = data.map(v => {
+                return {
+                    ...v,
+                    value: v.name.replace("市", "")
+                }
+            })
+
+            // 默认选中第一项
+            this.form.departCode = newData[0].sort;
+            this.form.departCity = newData[0].value;
+
+            cb(newData);
+        })
+    },
+    handleCitySelect(item){
+        this.form.city = item.value;
+    },
+    handleAddDraft(){
+      console.log(123);
+    }
+  },
+  mounted(){
+    
   }
 };
 </script>
 
 <style lang="less" scoped>
-el-input{
-    height: 40px;
-    line-height: 40px;
-    padding: 10px 15px;
-    width: 100%;
+.city{
+  display: inline-block;
 }
 .container {
-    width: 60%;
     margin: 0 auto;
-    padding: 50px 0;
     .quill-editor {
-      min-height: 200px;
-      max-height: 400px;
       overflow-y: auto;
+      padding-bottom: 5px;
+      .ql-container{
+        min-height: 500px;
+      }
     }
 }
