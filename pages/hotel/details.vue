@@ -28,7 +28,7 @@
     </div>
 
     <!-- 酒店信息图片 -->
-    <div class="details-image">
+    <!-- <div class="details-image">
       <div class="details-image-big">
         <img src="@/assets/1.jpeg" alt />
       </div>
@@ -52,7 +52,7 @@
           <img src="@/assets/1.jpeg" alt />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 房间信息 -->
     <div class="details-items">

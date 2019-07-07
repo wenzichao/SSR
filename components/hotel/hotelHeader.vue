@@ -66,7 +66,7 @@
 export default {
     data(){
         return {
-            city:'',
+            city:'南京',
             date:'',
             allPeople:'',
             adult:'',
@@ -86,6 +86,7 @@ export default {
 
 <style scoped lang="less">
     .top{
+        margin-top: 20px;
         font-size: 14px;
         color: rgb(102, 98, 98);
     }
