@@ -1,40 +1,24 @@
 <template>
-  <div class="container">
-    <div class="bigbox">
+  <div class="container clearfix">
+    <div class="bigbox clearfix">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/post' }">旅游攻略</el-breadcrumb-item>
         <el-breadcrumb-item>攻略详情</el-breadcrumb-item>
       </el-breadcrumb>
-      <h1 class="h1">{{this.dataList.title}}</h1>
-      <div class="gonlue">
-        <span>
-          攻略 : 2019-05-22 10:57
-          <span class="span1">阅读 : 619</span>
-        </span>
+
+      <!-- 攻略详情内容 -->
+      <div>
+        <Gonluexiangqing />
       </div>
-      <div v-html="this.dataList.content" class="content">{{this.dataList.content}}</div>
-      <div class="tubiao-box">
-        <div class="tubiao-xiao">
-          <i class="el-icon-edit-outline tubiao"></i>
-          <p class="tubiao-pinlun">评论(100)</p>
-        </div>
-        <div class="tubiao-xiao">
-          <i class="el-icon-star-off tubiao"></i>
-          <p class="tubiao-pinlun">收藏</p>
-        </div>
-        <div class="tubiao-xiao">
-          <i class="el-icon-share tubiao"></i>
-          <p class="tubiao-pinlun">分享</p>
-        </div>
-        <div class="tubiao-xiao">
-          <i class="el-icon-thumb tubiao"></i>
-          <p class="tubiao-pinlun">点赞(5)</p>
-        </div>
+
+      <!-- 收藏点赞 -->
+      <div>
+        <Pinglundianzan />
       </div>
 
       <div class="bottom">
-        <h4 data-v-741ea8d8 class="h4">评论</h4>
-        <div data-v-741ea8d8 class="el-textarea">
+        <h4 class="h4">评论</h4>
+        <div class="el-textarea">
           <textarea
             autocomplete="off"
             placeholder="说点什么吧..."
@@ -68,12 +52,11 @@
               </span>
             </div>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt />
+          <el-dialog>
+            <img width="100%" />
           </el-dialog>
-          <div data-v-741ea8d8>
+          <div>
             <button
-              data-v-741ea8d8
               type="button"
               class="el-button cmt-submit el-button--primary el-button--mini"
             >
@@ -83,112 +66,143 @@
             </button>
           </div>
         </div>
-        <!-- 评论 -->
-        <div data-v-741ea8d8 class="cmt-list">
-          <div data-v-741ea8d8 class="cmt-item">
-            <div data-v-741ea8d8 class="cmt-info">
-              <img data-v-741ea8d8 src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
-              李杀猪
-              <i data-v-741ea8d8>2019-07-05 4:58</i>
-              <span data-v-741ea8d8>1</span>
-            </div>
-            <div data-v-741ea8d8 class="cmt-content">
-              <!---->
-              <div data-v-741ea8d8 class="cmt-new">
-                <p data-v-741ea8d8 class="cmt-message">是是是</p>
-                <div data-v-741ea8d8 class="el-row el-row--flex"></div>
-                <div data-v-741ea8d8 class="cmt-ctrl">
-                  <a data-v-741ea8d8 href="javascript:;">回复</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div data-v-741ea8d8 class="cmt-item">
-            <div data-v-741ea8d8 class="cmt-info">
-              <img data-v-741ea8d8 src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
-              小柠檬
-              <i data-v-741ea8d8>2019-07-05 4:54</i>
-              <span data-v-741ea8d8>1</span>
-            </div>
-            <div data-v-741ea8d8 class="cmt-content">
-              <!---->
-              <div data-v-741ea8d8 class="cmt-new">
-                <p data-v-741ea8d8 class="cmt-message">sfddj</p>
-                <div data-v-741ea8d8 class="el-row el-row--flex"></div>
-                <div data-v-741ea8d8 class="cmt-ctrl">
-                  <a data-v-741ea8d8 href="javascript:;">回复</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 分页 -->
 
-        <div class="block">
-            <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage4"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="400">
-            </el-pagination>
+     
+        <div class="cmt-list" v-for="(item,index) in dataList" :key="index" :data="item" >
+        <div class="cmt-item">
+          <div class="cmt-info">
+            <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
+            <!-- {{this.dataList.account.nickname}} -->
+            {{item.account.nickname}}
+            <i>2019-07-05 4:54</i>
+            <span>{{item.id}}</span>
+          </div>
+          <div class="cmt-content">
+            <!---->
+            <div class="cmt-new">
+              <p class="cmt-message">{{item.content}}</p>
+              <div class="el-row el-row--flex"></div>
+              <div class="cmt-ctrl">
+                <a href="javascript:;">回复</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      
+      
+        <!-- 分页 -->
+       
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageIndex"
+            :page-sizes="[2, 4, 6, 8]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="detailData.total"
+          ></el-pagination>
+        
+      </div>
+    </div>
+    <div class="right clearfix">
+        <div class="xiangguang">
+          <h3>相关攻略</h3>
+        </div>
+
+        <div v-html="this.tuijianList.content">{{this.tuijianList.content}}</div>
     </div>
   </div>
 </template>
 
 <script>
+import Gonluexiangqing from "@/components/detail/gonluexiangqing";
+import Pinglundianzan from "@/components/detail/pinglundianzan";
+// import Fabupinglun from "@/components/detail/fabupinglun";
+
 export default {
   data() {
     return {
+      tuijianList:{},
+      detailData: {
+        data: [],
+        total:0,
+      },
+
       dataList: [],
-      //   title:this.data.data[0].title
-      dialogImageUrl: "",
-      dialogVisible: false,
-      disabled: false,
-      currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4
+      pageIndex: 1, //页数
+      pageSize: 2, //条数
     };
   },
-  mounted() {
-    this.$axios({
-      url: "/posts",
-      method: "GET"
-      // headers:{
-      //           Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
-      //       }
-    }).then(res => {
-      this.dataList = res.data.data[0];
-      console.log(res.data.data[0]);
-    });
-  },
-  methods: {
-    handleRemove(file) {
-      console.log(file);
+
+    mounted(){
+      
+        this.getDataList()
+        this.tuijianDataList()
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+
+  methods:{
+        // 封装一个页面渲染请求
+        getDataList(){
+            this.$axios({
+            url:"/posts/comments",
+            params:this.$route.query
+            }).then(res=>{
+            this.detailData = res.data;   
+            this.dataList = res.data.data.slice(0,2);
+            console.log(res.data.data);
+            })
+        },
+
+        // 封装一个页面渲染请求
+        tuijianDataList(){
+            this.$axios({
+            url:"/posts/recommend",
+            params:this.$route.query
+            }).then(res=>{
+            console.log(res.data);
+            console.log(res.data.data);
+            this.tuijianList = res.data.data[3]
+            })
+        },
+
+        // 分页条数的选择
+        handleSizeChange(val){
+            this.pageSize = val;
+            
+        },
+        // 页数的选择
+        handleCurrentChange(val){
+            // console.log(val);
+            this.pageIndex = val;
+
+            this.dataList = this.detailData.data.slice(
+              (this.pageIndex - 1) * this.pageSize,
+              this.pageIndex * this.pageSize
+            )
+           
+        },
+        
     },
-    handleDownload(file) {
-      console.log(file);
-    },
-    handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
+  
+
+  components: {
+    Gonluexiangqing,
+    Pinglundianzan,
+    // Fabupinglun
   }
 };
 </script>
 
 <style>
+.clearfix:before,.clearfix:after { 
+  content:"";
+  display:table;
+}
+.clearfix:after {
+ clear:both;
+}
+
 .container {
   width: 1000px;
   margin: 0 auto;
@@ -196,6 +210,7 @@ export default {
 }
 .bigbox {
   width: 700px;
+  float: left;
 }
 .h1 {
   width: 700px;
@@ -217,6 +232,24 @@ export default {
 }
 .content img {
   max-width: 700px !important;
+}
+.right{
+  width: 280px;
+  float: right;
+  margin-left: 20px;
+}
+.right img:nth-child(2){
+  width: 56px;
+  height: 56px;
+}
+.right img{
+  width: 280px;
+}
+
+ .xiangguang h3{
+  font-weight: 400;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
 }
 .tubiao-box {
   padding: 50px 0 30px;
@@ -259,6 +292,9 @@ export default {
   left: 36px;
   top: 36px;
 }
+.cmt-info span{
+  float: right;
+}
 .el-textarea {
   margin-bottom: 10px;
 }
@@ -279,7 +315,7 @@ export default {
         border: 1px solid #ddd;
 }
 .cmt-item{
-        border-bottom: 1px dashed #ddd;
+        /* border-bottom: 1px dashed #ddd; */
         padding: 20px 20px 5px;
 }
 .cmt-info{
@@ -307,5 +343,17 @@ export default {
     font-size: 12px;
     color: #1e50a2;
     text-align: right;
+}
+.block{
+  margin-top: 10px;
+}
+.bottom{
+  margin-bottom: 20px;
+}
+.cmt-ctrl a{
+  display: none;
+}
+.cmt-new:hover a{
+  display: block
 }
 </style>

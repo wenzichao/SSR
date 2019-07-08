@@ -99,7 +99,7 @@ export default {
         // 页数的选择
         handleCurrentChange(val){
             // console.log(val);
-            this.pageIndex = val;
+            this.pageIndex = 2;
             this.setDataList()
         },
     },
