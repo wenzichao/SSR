@@ -1,26 +1,28 @@
 <template>
     <div>
-        <el-row type="flex" v-for="(item,index) in data" :key="index" class="hotel-item">
-            <nuxt-link :to="`/hotel/details?city=${item.city.id}&id=${item.id}`">
-                <img :src="item.photos" class="hotel-img" />
+        <el-row type="flex" class="hotel-item">
+            <nuxt-link :to="`/hotel/details?city=${data.city.id}&id=${data.id}`">
+                <img :src="data.photos" class="hotel-img" />
             </nuxt-link>
             <div class="hotel-item-conten">
-                <nuxt-link :to="`/hotel/details?city=${item.city.id}&id=${item.id}`" class="hotel-title">
-                    <div>{{item.name}}</div>
+                <nuxt-link :to="`/hotel/details?city=${data.city.id}&id=${data.id}`" class="hotel-title">
+                    <div>{{data.name}}</div>
                 </nuxt-link>
                 <div class="hotel-type">
-                    <span>{{item.alias}}</span>
+                    <span>{{data.alias}}</span>
                     <span class="icon-star">
-                        <i class="el-icon-star-on"></i>
-                        <i class="el-icon-star-on"></i>
-                        <i class="el-icon-star-on"></i>
+                        <i class="el-icon-star-on" v-if="this.level>=1"></i>
+                        <i class="el-icon-star-on" v-if="this.level>=2"></i>
+                        <i class="el-icon-star-on" v-if="this.level>=3"></i>
+                        <i class="el-icon-star-on" v-if="this.level>=4"></i>
+                        <i class="el-icon-star-on" v-if="this.level>=5"></i>
                     </span>
-                    <span>{{item.hoteltype.name}}</span>
+                    <span>{{data.hoteltype.name}}</span>
                 </div>
                 <div class="hotel-grade">
                     <el-row type="flex">
                         <el-rate
-                            v-model="item.stars"
+                            v-model="data.stars"
                             disabled
                             show-score
                             text-color="#ff9900"
@@ -39,11 +41,11 @@
                 </div>
                 <div class="hotel-site">
                     <i class="el-icon-location-outline"></i>
-                    <span>位于: {{item.address}}</span>
+                    <span>位于: {{data.address}}</span>
                 </div>
             </div>
             <div class="hotel-price">
-                <a href="#"  v-for="(item,index) in item.products" :key="index">
+                <a href="#"  v-for="(item,index) in data.products" :key="index">
                     <div class="hotel-travel-price">
                         <el-row type="flex" justify="speace-between">
                             <el-col :span='12' class="price-stl">
@@ -66,18 +68,22 @@ export default {
     data(){
         return {
             grade:3.5,
-            data:[],
+            level:'',
+        }
+    },
+    props:{
+        data:{
+            type:Object,
+            default:{
+                hotellevel:{}
+            }
         }
     },
     mounted(){
-        this.$axios({
-            url:'/hotels',
-            method:'GET'
-        }).then(res=>{
-            console.log(res.data);
-            const {data} = res.data;
-            this.data = data;
-        })
+        setTimeout(()=>{
+            this.level = this.data.hotellevel.level
+            // console.log(this.level.length);
+        },100)
     }
 }
 </script>

@@ -112,9 +112,12 @@ export default {
           path: "/post/create",
           query: this.form
       });
-      if(valid){
-        this.$router.back()
-      }
+      // 先获取本地的列表
+      const localPost = JSON.parse(localStorage.getItem("post") || `[]`);
+
+      // 把当前表单的值保存到本地
+      localPost.unshift(this.form);
+      localStorage.setItem('post',JSON.stringify(localPost))
     },
     queryCitySearch(value, cb){
         if(!value) return;

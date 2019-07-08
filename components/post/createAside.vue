@@ -3,6 +3,7 @@
         <h5>草稿（0）</h5>
         <nuxt-link v-for="(item,index) in drafts" 
             :key="index"
+            to="#"
             >
             <el-row type="flex" 
             justify="space-between" 
@@ -10,10 +11,9 @@
             class="history-item"
             >
                 <div class="air-info">
-                    <div class="to-from">{{item.departCity}} - {{item.destCity}}</div>
-                    <p>{{item.departDate}}</p>
+                    <div class="to-from">{{item.title}}</div>
+                    <p>{{item.Date}}</p>
                 </div>
-                <span>选择</span>
             </el-row>
         </nuxt-link>
     </div>
@@ -27,7 +27,8 @@ export default {
         }
     },
     mounted(){
-        // this.drafts = JSON.parse()
+        this.drafts = JSON.parse(localStorage.getItem('post')||`[]`)
+        console.log(this.drafts,123123)
     }
 }
 </script>
