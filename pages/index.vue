@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="carousel">
       <el-carousel 
       height="700px"
       :interval="5000"
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style lang='less'>
-.container{
+.carousel{
     min-width:1000px;
     margin:0 auto;
     position:relative;

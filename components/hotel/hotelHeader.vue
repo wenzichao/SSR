@@ -1,9 +1,8 @@
 <template>
     <div>
-        <div class="top">酒店　<i class="el-icon-arrow-right"></i>　南京市酒店预订</div>
+        <div class="top">酒店　<i class="el-icon-arrow-right"></i>　{{city}}市酒店预订</div>
         <el-row type="flex" justify="centent" class="price-select">
-            <!-- 输入框 -->
-            <!-- <el-input v-model="city" placeholder="请输入内容" class='city-content'></el-input> -->
+            <!-- 城市输入框 -->
             <el-autocomplete
                 class="inline-input city-content"
                 v-model="city"
@@ -21,7 +20,7 @@
                 class="time-content">
             </el-date-picker>
             <!-- 人数选择框 -->
-                <el-popover
+            <el-popover
                     placement="bottom"
                     trigger="click">
                     <div>
@@ -62,7 +61,7 @@
                             v-model="allPeople"
                             slot="reference">
                         </el-input>
-                </el-popover>
+            </el-popover>
             <!-- 查看价格按钮 -->
             <el-button type="primary" class="check-price" @click="checkPrice">查看价格</el-button>
       </el-row>
@@ -73,7 +72,7 @@
 export default {
     data(){
         return {
-            city:'南京',
+            city:'',
             allCity:[],
             date:'',
             allPeople:'',
@@ -82,6 +81,7 @@ export default {
         }
     },
     mounted(){
+        // 所有城市的获取
         this.$axios({
             url:'/cities?name=',
             method:'GET',
@@ -91,10 +91,12 @@ export default {
         })
     },
     methods:{
+        // 组件传值修改渲染城市
         handleSelect(val){
             // console.log(val);
             this.$emit('changeCity',val)
         },
+        // 对获取数据进行渲染
         querySearch(queryString, cb){
             const newData = this.allCity.map(v=>{
                 return {

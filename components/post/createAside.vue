@@ -1,6 +1,6 @@
 <template>
     <div class="draft">
-        <h5>草稿（0）</h5>
+        <h5>草稿（{{drafts.length}}）</h5>
         <nuxt-link v-for="(item,index) in drafts" 
             :key="index"
             to="#"
@@ -12,7 +12,7 @@
             >
                 <div class="air-info">
                     <div class="to-from">{{item.title}}</div>
-                    <p>{{item.Date}}</p>
+                    <p>{{item.time}}</p>
                 </div>
             </el-row>
         </nuxt-link>
@@ -27,8 +27,13 @@ export default {
         }
     },
     mounted(){
-        this.drafts = JSON.parse(localStorage.getItem('post')||`[]`)
-        console.log(this.drafts,123123)
+        let arr = JSON.parse(localStorage.getItem('post')||`[]`)
+        if(arr.length>3){
+            this.drafts = arr.slice(3)
+            localStorage.setItem('post',JSON.stringify(this.drafts))
+        }else{
+            this.drafts = arr
+        }
     }
 }
 </script>

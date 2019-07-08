@@ -34,14 +34,12 @@ export default {
     
 
     handleRemove(file) {
-      console.log(file);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
     handleDownload(file) {
-      console.log(file);
     },
  
 
@@ -52,7 +50,6 @@ export default {
       method:'GET',
     }).then(res=>{
       // this.dataList = res.data.data
-      console.log(res.data);
     })
       },
 

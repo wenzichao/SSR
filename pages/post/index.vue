@@ -4,7 +4,13 @@
       <PostNav />
       <div class="recommendCity">
         <span>推荐城市</span>
-        <img src="./pic_sea.jpeg" alt="">
+        <div class="carousel">
+          <el-carousel height="180px" indicator-position='none' interval=5000>
+          <el-carousel-item v-for="(item,index) in picture" :key="index">
+            <img src="./pic_sea.jpeg" alt="" style="width:260px;height:178px;">
+          </el-carousel-item>
+        </el-carousel>
+        </div>
       </div>
     </div>
     <div class="rightAside">
@@ -21,10 +27,12 @@
 
       <!-- 推荐 -->
       <div class="headRecommend">
-        推荐：
-        <v-link to="#" class="headRecommendCity">广州</v-link>
-        <v-link to="#" class="headRecommendCity">上海</v-link>
-        <v-link to="#" class="headRecommendCity">北京</v-link>
+        <el-row type="flex">
+          推荐：
+          <nuxt-link to="#" class="headRecommendCity">广州</nuxt-link>
+          <nuxt-link to="#" class="headRecommendCity">上海</nuxt-link>
+          <nuxt-link to="#" class="headRecommendCity">北京</nuxt-link>
+        </el-row>
       </div>
 
       <!-- 推荐攻略标题 -->
@@ -53,6 +61,12 @@ import recommendArticle from "@/components/post/recommendArticle.vue";
 export default {
   data() {
       return {
+        picture:[
+          {url:'/pages/post/pic_sea.jpeg'},
+          {url:'1.jpeg'},
+          {url:'2.jpeg'},
+          {url:'3.jpeg'},
+        ]
       };
     },
   components: {
@@ -62,22 +76,11 @@ export default {
     methods:{
       handleSearch(){},
       handleWriteWalkthrough(){
-        console.log(this.$route);
         this.$router.push({path:'post/create'})
       }
     },
   mounted(){
-    this.$refs.modelInput.focus();
-    this.$axios({
-      url:'/posts',
-      method:'GET',
-      // headers:{
-      //           Authorization: `Bearer ${this.$store.state.user.userInfo.token}` 
-      //       }
-    }).then(res=>{
-      // this.dataList = res.data.data
-      console.log(res.data);
-    })
+    
   }
 };
 </script>
@@ -109,9 +112,11 @@ export default {
         padding: 0 10px;
         border-bottom: 1px #ccc solid;
       }
+      .carousel{
+        margin-top: 10px;
+      }
       img{
         margin-top: 10px;
-        width: 100%;
       }
     }
   }
@@ -151,6 +156,7 @@ export default {
       color:#666;
       .headRecommendCity{
         cursor: pointer;
+        padding-right: 10px;
         &:hover{
           color: orange;
           text-decoration: underline;
@@ -182,7 +188,13 @@ export default {
       }
       .walkthroughButton{
         padding: 12px 20px;
+        // position: absolute;
+        // right: 100px;
+        // top: 100px;
       }
     }
   }
+/deep/ .el-carousel{
+  width: 260px;
+}
 </style>

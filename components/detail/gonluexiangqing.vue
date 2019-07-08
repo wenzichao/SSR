@@ -1,24 +1,24 @@
 <template>
     <div>
-        <h1 class="h1">{{this.dataList.title}}</h1>
+        <h1 class="h1">{{dataList.title}}</h1>
       <div class="gonlue">
         <span>
-          攻略 : 2019-05-22 10:57
-          <span class="span1">阅读 : 619</span>
+          攻略 : {{dataList.city.created_at}}
+          <span class="span1">阅读 : {{dataList.watch}}</span>
         </span>
       </div>
-      <div v-html="this.dataList.content" class="content">{{this.dataList.content}}</div>
+      <div v-html="dataList.content" class="content"></div>
     </div>
 </template>
 
 <script>
-import Gonluexiangqing from "@/components/detail/gonluexiangqing";
-
 export default {
   data() {
     return {
       total:'',
-      dataList: [],
+      dataList: {
+        city:{}
+      },
       dialogImageUrl: "",
       dialogVisible: false,
       disabled: false,
@@ -26,36 +26,18 @@ export default {
     };
   },
   mounted(){
-    
-
-
+    const {id} = this.$route.query
     this.$axios({
-      url:'/posts',
-      // url:'/posts/comments',
+      url:'/posts?id=' + id,
       method:'GET',
-      // headers:{
-      //           Authorization: `Bearer ${this.$store.state.user.userInfo.token}` 
-      //       }
     }).then(res=>{
       this.dataList = res.data.data[0];
-      console.log(res.data.data);
     })
-
-
   },
-
-
-
-  
 };
 </script>
 
-<style>
-.container {
-  width: 1000px;
-  margin: 0 auto;
-  padding-top: 20px;
-}
+<style> 
 .bigbox {
   width: 700px;
 }

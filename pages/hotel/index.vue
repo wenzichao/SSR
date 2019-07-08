@@ -40,10 +40,11 @@ export default {
       pageSize:10,
       dataList:[],
       total:0,
-      city_id:'74'
+      city_id:''
     }
   },
   mounted(){
+    // 第一次渲染
     this.getDataList()
   },
   watch:{
@@ -53,13 +54,15 @@ export default {
         }
     },
   methods:{
+    // 修改页面的渲染
     handleCurrentChange(val){
       this.pageIndex = val;
       this.getDataList()
     },
+    // 页面渲染的方法
     getDataList(){
       this.$axios({
-        url:`/hotels?city=${this.city_id}`,
+        url:`/hotels`,
         method:"GET",
         params:{
           _start:this.pageIndex,
@@ -71,14 +74,20 @@ export default {
         this.total = res.data.total
       })
     },
+    // 其他过滤条件
     getFilter(obj){
       this.$router.push({
         path:'/hotel',
         query:{...obj}
       })
     },
+    // 获取头部组件传回的ID
     changeCity(obj){
-      this.city_id = obj.id;
+      // this.city_id = obj.id;
+      this.$router.push({
+        path:'/hotel',
+        query:{city:obj.id}
+      })
       this.getDataList()
     }
   },

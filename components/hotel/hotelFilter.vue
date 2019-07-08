@@ -1,6 +1,7 @@
 <template>
     <div class="filter">
         <el-row type="flex">
+            <!-- 价格滑动条 -->
             <div class="slide">
                 <el-row type="flex" justify="space-between">
                     <div>价格</div>
@@ -8,6 +9,7 @@
                 </el-row>
                 <el-slider :format-tooltip="formatTooltip" v-model=slide @change="handelChangeSkide"></el-slider>
             </div>
+            <!-- 酒店等级的选择 -->
             <div class="drop-down">
                 <div>住宿等级</div>
                 <el-dropdown>
@@ -31,6 +33,7 @@
                 </el-dropdown-menu>
                 </el-dropdown>
             </div>
+            <!-- 酒店类型的选择 -->
             <div class="drop-down">
                 <div>住宿类型</div>
                 <el-dropdown>
@@ -54,6 +57,7 @@
                 </el-dropdown-menu>
                 </el-dropdown>
             </div>
+            <!-- 酒店设施的选择 -->
             <div class="drop-down">
                 <div>酒店设施</div>
                 <el-dropdown>
@@ -77,6 +81,7 @@
                 </el-dropdown-menu>
                 </el-dropdown>
             </div>
+            <!-- 酒店品牌的选择 -->
             <div class="drop-down">
                 <div>酒店品牌</div>
                 <el-dropdown>
@@ -126,6 +131,7 @@ export default {
         }
     },
     mounted(){
+        // 对过滤条件的数据获取
         this.$axios({
             url:'/hotels/options',
             method:'GET',
@@ -145,11 +151,13 @@ export default {
         })
     },
     methods:{
+        // 返回默认值的方法
         restore(){
             let obj = {};
             obj.price_lt = 5000;
             this.$emit('getFilter',obj)
         },
+        // 活动条的数量
         formatTooltip(val){
             val *= 20;
             return val

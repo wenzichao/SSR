@@ -120,6 +120,7 @@
           </el-row>
         </div>
       </div>
+      <!-- 高德地图板块 -->
       <div class="map">
           <div id="container"></div>
       </div>
@@ -136,6 +137,7 @@ export default {
         }
     },
     methods:{
+      // 地域的显示隐藏
         handleShow(){
             if(this.height=='42px'){
                 this.height = '152px';
@@ -147,6 +149,7 @@ export default {
         }
     },
     mounted(){
+      // 高德地图
         window.onLoad = function(){
             var map = new AMap.Map('container',{
                 center:[118.78 ,32.07],

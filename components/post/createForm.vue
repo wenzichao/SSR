@@ -21,7 +21,7 @@
         ></el-autocomplete>
       </el-form-item>
       <el-form-item>
-          <el-button type="primary" @click="onSubmit">发布</el-button>
+          <el-button type="primary" @click="onSubmit" class="btn-issue">发布</el-button>
           或者
           <el-link type="success" :underline="false" @click="handleAddDraft">保存到草稿</el-link>
     </el-form-item>
@@ -34,7 +34,7 @@ if (process.browser) {
   const VueQuillEditor = require('vue-quill-editor/dist/ssr')
   Vue.use(VueQuillEditor, /* { default global options } */)
 }
-
+import moment from 'moment'
 export default {
   name:'app',
   data() {
@@ -42,39 +42,14 @@ export default {
       form: {
         title: "",
         city: "",
-        content:''
-     
+        content:'',
+        id:0,
       },
       editorOption: {}
     };
   },
   methods: {
     onSubmit() {
-      const data = {
-        form:this.form
-      }
-      const token = this.$store.state.user.userInfo.token;
-        // 提交到游记列表的接口
-      this.$axios({
-          url: "/posts",
-          method: "POST",
-          data,
-          headers: {
-              Authorization:`Bearer ${token}`
-          }
-      }).then(res => {
-        console.log(res);
-
-          if(status === 0){
-              // 成功的提示
-              this.$message.success(message);
-              // 返回上一页
-              this.$router.back();
-          }else{
-          //     跳转到登录页
-               this.$router.push("/login");
-          }
-      })
     // 自定义表单验证
       const rules = {
           title: {
@@ -108,11 +83,37 @@ export default {
       // 验证不通过，直接返回
       if(!valid) return;
 
-      this.$router.push({
-          path: "/post/create",
-          query: this.form
-      });
+      let data = {};
+      data.title = this.form.title;
+      data.content = this.form.content;
+      data.city = this.form.id;
+      console.log(data);
+      // 发送请求
+      const token = this.$store.state.user.userInfo.token;
+        // 提交到游记列表的接口
+      this.$axios({
+          url: "/posts",
+          method: "POST",
+          data,
+          headers: {
+              Authorization:`Bearer ${token}`
+          }
+      }).then(res => {
+          console.log(res.data);
+          if(status === 0){
+              // 成功的提示
+              this.$message.success(message);
+              // 返回上一页
+              this.$router.back();
+          }else{
+          //     跳转到登录页
+               this.$router.push("/login");
+          }
+      })
+
       // 先获取本地的列表
+      const time = moment().format('YYYY-MM-DD')
+      this.form.time = time;
       const localPost = JSON.parse(localStorage.getItem("post") || `[]`);
 
       // 把当前表单的值保存到本地
@@ -128,7 +129,6 @@ export default {
             method: "GET",
         }).then(res => {
             const {data} = res.data;
-
             // 给data每一项都加value
             const newData = data.map(v => {
                 return {
@@ -145,10 +145,15 @@ export default {
         })
     },
     handleCitySelect(item){
-        this.form.city = item.value;
+        this.form.id = item.id
+        this.form.city = item.name;
     },
     handleAddDraft(){
-      console.log(123);
+      const time = moment().format('YYYY-MM-DD')
+      this.form.time = time;
+      const localPost = JSON.parse(localStorage.getItem("post") || `[]`);
+      localPost.unshift(this.form);
+      localStorage.setItem('post',JSON.stringify(localPost))
     }
   },
   mounted(){
@@ -160,6 +165,9 @@ export default {
 <style lang="less" scoped>
 .city{
   display: inline-block;
+}
+/deep/ .el-button{
+  position: relative;
 }
 .container {
     margin: 0 auto;

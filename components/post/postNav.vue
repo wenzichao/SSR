@@ -39,7 +39,6 @@
             url:`posts/cities`,
             method:'GET',
         }).then(res=>{
-            console.log(res);
             this.cities=res.data.data
         })
    },
@@ -99,8 +98,8 @@
         }
         .info{
             position: absolute;
-            left: 260px;
-            top: 20px;
+            left: 435px;
+            top: 81px;
             width: 400px;
             z-index: 1000;
             background-color: #fff;

@@ -106,11 +106,7 @@
       </div>
     </div>
     <div class="right clearfix">
-        <div class="xiangguang">
-          <h3>相关攻略</h3>
-        </div>
-
-        <div v-html="this.tuijianList.content">{{this.tuijianList.content}}</div>
+      <Correlation />
     </div>
   </div>
 </template>
@@ -118,7 +114,7 @@
 <script>
 import Gonluexiangqing from "@/components/detail/gonluexiangqing";
 import Pinglundianzan from "@/components/detail/pinglundianzan";
-// import Fabupinglun from "@/components/detail/fabupinglun";
+import Correlation from "@/components/detail/correlation";
 
 export default {
   data() {
@@ -134,11 +130,15 @@ export default {
       pageSize: 2, //条数
     };
   },
-
+  watch:{
+        // 路由改变重新渲染
+        $route(){
+            this.getDataList()
+        }
+    },
     mounted(){
       
         this.getDataList()
-        this.tuijianDataList()
     },
 
   methods:{
@@ -150,22 +150,8 @@ export default {
             }).then(res=>{
             this.detailData = res.data;   
             this.dataList = res.data.data.slice(0,2);
-            console.log(res.data.data);
             })
         },
-
-        // 封装一个页面渲染请求
-        tuijianDataList(){
-            this.$axios({
-            url:"/posts/recommend",
-            params:this.$route.query
-            }).then(res=>{
-            console.log(res.data);
-            console.log(res.data.data);
-            this.tuijianList = res.data.data[3]
-            })
-        },
-
         // 分页条数的选择
         handleSizeChange(val){
             this.pageSize = val;
@@ -189,12 +175,12 @@ export default {
   components: {
     Gonluexiangqing,
     Pinglundianzan,
-    // Fabupinglun
+    Correlation
   }
 };
 </script>
 
-<style>
+<style scoped>
 .clearfix:before,.clearfix:after { 
   content:"";
   display:table;
@@ -244,12 +230,6 @@ export default {
 }
 .right img{
   width: 280px;
-}
-
- .xiangguang h3{
-  font-weight: 400;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ccc;
 }
 .tubiao-box {
   padding: 50px 0 30px;

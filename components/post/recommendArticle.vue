@@ -3,35 +3,50 @@
         <div class="articleBox">
             <ul>
                 <li v-for="(item,index) in dataList" :key="index" :class="`articleItem${item.images.length<3?2:1}`">
-                    <!-- {{item}} {{index}}  -->
+                    <!-- 跳转到详情 -->
+                    <nuxt-link :to="`/post/detail?id=${item.id}`">
                         <h4 class="h4isDisplay1" @click="mouseEnter(item.id)">{{item.title}}</h4>
-                        <!-- 用于控制只有一张图片时，图片在左边 -->
-                        <div class="articleImg1" style="display:none">
+                    </nuxt-link>
+                    <!-- 用于控制只有一张图片时，图片在左边 -->
+                    <div class="articleImg1" style="display:none">
+                        <nuxt-link :to="`/post/detail?id=${item.id}`">
                             <img :src="dataList[index].images[0]" alt="">
-                        </div>
-
-                        <div class="rightBox" style="display:none">
+                        </nuxt-link>
+                    </div>
+                    <div class="rightBox" style="display:none">
                             <!-- 用于控制只有一张图片时，标题在右边 -->
-                            <h4 class="h4isDisplay2">{{item.title}}</h4>
-                            <p v-html="dataList[index].summary" class="articleContent2"></p>
+                            <nuxt-link :to="`/post/detail?id=${item.id}`">
+                                <h4 class="h4isDisplay2">{{item.title}}</h4>
+                            </nuxt-link>
+                            <nuxt-link :to="`/post/detail?id=${item.id}`">
+                                <p v-html="dataList[index].summary" class="articleContent2"></p>
+                            </nuxt-link>
                             <div class="postInfo2">
                                 <span>
                                     <i class="el-icon-location"></i>
                                     {{item.cityName}}
                                     by
-                                    <img :src="`http://157.122.54.189:9095${dataList[index].account.defaultAvatar}`" alt="">
+                                        <img :src="`http://157.122.54.189:9095${dataList[index].account.defaultAvatar}`" 
+                                        alt="">
                                     {{dataList[index].account.nickname}}
                                     <i class="el-icon-view"></i>
                                     {{dataList[index].watch}}
                                 </span>
                             </div>
-                        </div>
-                        
+                    </div>
+                    <nuxt-link :to="`/post/detail?id=${item.id}`">
                         <p v-html="dataList[index].summary" class="articleContent1"></p>
-                        <div class="articleImg2">
-                                <img :src="dataList[index].images[0]" alt="">
-                                <img :src="dataList[index].images[1]" alt="">
-                                <img :src="dataList[index].images[2]" alt="">
+                    </nuxt-link>
+                    <div class="articleImg2">
+                                <nuxt-link :to="`/post/detail?id=${item.id}`">
+                                    <img :src="dataList[index].images[0]" alt="">
+                                </nuxt-link>
+                                <nuxt-link :to="`/post/detail?id=${item.id}`">
+                                    <img :src="dataList[index].images[1]" alt="">
+                                </nuxt-link>
+                                <nuxt-link :to="`/post/detail?id=${item.id}`">
+                                    <img :src="dataList[index].images[2]" alt="">
+                                </nuxt-link>
                                 <div class="postInfo2" style="display:none">
                                     <span>
                                         <i class="el-icon-location"></i>
@@ -43,8 +58,8 @@
                                         {{dataList[index].watch}}
                                     </span>
                                 </div>
-                        </div>
-                        <div class="postInfo1">
+                    </div>
+                    <div class="postInfo1">
                             <span>
                                 <i class="el-icon-location"></i>
                                 {{item.cityName}}
@@ -54,7 +69,7 @@
                                 <i class="el-icon-view"></i>
                                 {{dataList[index].watch}}
                             </span>
-                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -84,14 +99,13 @@ export default {
     },
     mounted(){
         this.$axios({
-            url:`posts`,
+            url:`/posts`,
             method:'GET',
         }).then(res=>{
-            console.log(res);
+            console.log(res.data);
             this.total = res.data.data.length;
             this.dataListAll=res.data.data;
             this.dataList=this.dataListAll.slice(0,3);
-            console.log(this.dataList);
         })
     },
     methods:{
