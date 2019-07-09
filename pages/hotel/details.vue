@@ -62,6 +62,20 @@
     <!-- 地图 -->
     <div class="details-map" id="container"></div>
 
+    <!-- 地图信息 -->
+            <!-- <el-row class="map" type="flex" justify="space-between">
+                <div id="container"></div>
+                <div class="map-list">
+                     <el-tabs v-model="activeName" @tab-click="handleClick">
+                        <el-tab-pane label="风景" name="first">
+                            <div class="map-list1">
+                            <li v-for="(item,index) in scenic" :key="index" @click="handleChose(index)">{{item.name}}</li>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="交通" name="second">配置管理</el-tab-pane>
+                    </el-tabs>
+                </div> -->
+
     <!-- 酒店基本信息 -->
     <div class="details-Information">
       <div class="details-Information-basic">
@@ -230,6 +244,7 @@
 export default {
   data() {
     return {
+      // activeName: 'first',
       data: {},
       data_comments:{},
       value: '',
@@ -313,6 +328,7 @@ export default {
 }
 .container {
   width: 1000px;
+  margin: 0 auto;
   // 面包屑
   .details-breadcrumb {
     padding: 20px 0;
